@@ -27,11 +27,10 @@ def get_new_fig(fn, figsize=[9,9]):
     return fig1, ax1
 
 
-def configcell_text_and_colors(array_df, lin, col, oText, facecolors, posi, fz, fmt, show_null_values=0):
+def configcell_text_and_colors(array_df, lin, col, oText, facecolors, posi, fz, show_null_values=0):
     """
       config cell text and colors
       and return text elements to add and to dell
-      @TODO: use fmt
     """
     text_add = []; text_del = []
     cell_val = array_df[lin][col]
@@ -40,13 +39,13 @@ def configcell_text_and_colors(array_df, lin, col, oText, facecolors, posi, fz, 
     curr_column = array_df[:,col]
     ccl = len(curr_column)
 
-    #last line  and/or last column
+    # last line and/or last column
     if (col >= (ccl - 1)) or (lin == (ccl - 1)):
 
         if(col == ccl):
             per_ok=cell_val*100
             per_err=0
-        #tots and percents
+        # tots and percents
         elif(cell_val != 0):
             if(col == ccl - 1) and (lin == ccl - 1):
                 tot_rig = 0
@@ -65,29 +64,29 @@ def configcell_text_and_colors(array_df, lin, col, oText, facecolors, posi, fz, 
 
         per_ok_s = ['%.2f%%'%(per_ok), '100%'] [per_ok == 100]
 
-        #text to DEL
+        # text to DEL
         text_del.append(oText)
 
-        #text to ADD
+        # text to ADD
         font_prop = fm.FontProperties(weight='bold', size=fz)
         text_kwargs = dict(color='w', ha="center", va="center", gid='sum', fontproperties=font_prop)
         if col == lin:
-           lis_txt = ['%d'%(cell_val), per_ok_s,'Accuracy']
+            lis_txt = ['%d'%(cell_val), per_ok_s, 'Accuracy']
         elif col == ccl:
-          lis_txt = ['',per_ok_s,'']
+            lis_txt = ['', per_ok_s, '']
         else:
            lis_txt = ['%d'%(cell_val), per_ok_s, '%.2f%%'%(per_err)]
         lis_kwa = [text_kwargs]
         dic = text_kwargs.copy(); dic['color'] = 'lime'; lis_kwa.append(dic)
         dic = text_kwargs.copy(); dic['color'] = 'salmon'; lis_kwa.append(dic)
-        lis_pos = [(oText._x, oText._y-0.3), (oText._x, oText._y), (oText._x, oText._y+0.3)]
+        lis_pos = [(oText._x, oText._y - 0.3), (oText._x, oText._y), (oText._x, oText._y + 0.3)]
         for i in range(len(lis_txt)):
             newText = dict(x=lis_pos[i][0], y=lis_pos[i][1], text=lis_txt[i], kw=lis_kwa[i])
             #print 'lin: %s, col: %s, newText: %s' %(lin, col, newText)
             text_add.append(newText)
         #print '\n'
 
-        #set background color for sum cells (last line and last column)
+        # set background color for sum cells (last line and last column)
         carr = [0.27, 0.30, 0.27, 1.0]
         if(col >= ccl - 1) and (lin == ccl - 1):
             carr = [0.17, 0.20, 0.17, 1.0]
@@ -95,7 +94,7 @@ def configcell_text_and_colors(array_df, lin, col, oText, facecolors, posi, fz, 
 
     else:
         if(per > 0):
-            txt = '%s\n%.2f%%' %(cell_val, per)
+            txt = '%d\n%.2f%%' %(cell_val, per)
         else:
             if(show_null_values == 0):
                 txt = ''
@@ -105,9 +104,9 @@ def configcell_text_and_colors(array_df, lin, col, oText, facecolors, posi, fz, 
                 txt = '0\n0.0%'
         oText.set_text(txt)
 
-        #main diagonal
+        # main diagonal
         if(col == lin):
-            #set color of the textin the diagonal to white
+            # set color of the textin the diagonal to white
             oText.set_color('w')
             # set background color in the diagonal to blue
             facecolors[posi] = [0.35, 0.8, 0.55, 1.0]
@@ -128,18 +127,18 @@ def insert_totals(df_cm, pred_val_axis):
 
     sum_col = []
     for c in df_cm.columns:
-        sum_col.append( df_cm[c].sum() )
+        sum_col.append(df_cm[c].sum())
     sum_lin = []
     for item_line in df_cm.iterrows():
-        sum_lin.append( item_line[1].sum() )
+        sum_lin.append(item_line[1].sum())
     p = []
     r = []
     f1 = []
-    for i in range(0,len(df_cm.index)):
-        _p = df_cm.iat[i,i]/sum_col[i]
-        _q = df_cm.iat[i,i]/sum_lin[i]
-        _f1 = 2*(_p*_q)/(_p+_q)
-        f1.append(0 if _f1!=_f1 else _f1)
+    for i in range(0, len(df_cm.index)):
+        _p = df_cm.iat[i, i]  /sum_col[i]
+        _q = df_cm.iat[i, i] / sum_lin[i]
+        _f1 = 2 * (_p * _q) / (_p + _q)
+        f1.append(0 if _f1 != _f1 else _f1)
 
     df_cm[xlbl] = sum_lin
     df_cm['F1-Score'] = f1
@@ -149,8 +148,8 @@ def insert_totals(df_cm, pred_val_axis):
     df_cm.loc[ylbl] = sum_col
 
 
-def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fmt='.2f', fz=11,
-      lw=0.5, cbar=False, figsize=[8,8], show_null_values=0, pred_val_axis='y', outputfile=None):
+def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fz=11,
+      lw=0.5, cbar=False, figsize=[7, 7], show_null_values=0, pred_val_axis='y', outputfile=None):
     """
       print conf matrix with default layout (like matlab)
       params:
@@ -174,23 +173,23 @@ def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fmt='.2f', f
     # create "Total" column
     insert_totals(df_cm, pred_val_axis)
 
-    #this is for print allways in the same window
+    # this is for print allways in the same window
     fig, ax1 = get_new_fig('Conf matrix default', figsize)
     fig.patch.set_facecolor('white')
 
-    #thanks for seaborn
+    # thanks for seaborn
     ax = sn.heatmap(df_cm, annot=annot, annot_kws={"size": fz}, linewidths=lw, ax=ax1,
-                    cbar=cbar, cmap=cmap, linecolor='w', fmt=fmt)
+                    cbar=cbar, cmap=cmap, linecolor='w', fmt='.2f')
 
-    #set ticklabels rotation
-    ax.set_xticklabels(ax.get_xticklabels(), rotation = -30, fontsize = 10, ha='left')
-    ax.set_yticklabels(ax.get_yticklabels(), rotation = 25, fontsize = 10)
+    # set ticklabels rotation
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=-30, fontsize=10, ha='left')
+    ax.set_yticklabels(ax.get_yticklabels(), rotation=25, fontsize=10)
 
     # axis settings: avoiding cutting off edges
     bottom, top = ax.get_ylim()
     ax.set_ylim(bottom + 0.5, top - 0.5)
 
-    # Turn off all the ticks
+    # turn off all the ticks
     for t in ax.xaxis.get_major_ticks():
         t.tick1line.set_visible(False)
         t.tick2line.set_visible(False)
@@ -198,34 +197,34 @@ def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fmt='.2f', f
         t.tick1line.set_visible(False)
         t.tick1line.set_visible(False)
 
-    #face colors list
+    # face colors list
     quadmesh = ax.findobj(QuadMesh)[0]
     facecolors = quadmesh.get_facecolors()
 
-    #iter in text elements
+    # iter in text elements
     array_df = np.array( df_cm.to_records(index=False).tolist() )
     text_add = []; text_del = []
     posi = -1 #from left to right, bottom to top.
     for t in ax.collections[0].axes.texts: #ax.texts:
-        pos = np.array( t.get_position()) - [0.5,0.5]
+        pos = np.array(t.get_position()) - [0.5, 0.5]
         lin = int(pos[1]); col = int(pos[0])
         posi += 1
         #print ('>>> pos: %s, posi: %s, val: %s, txt: %s' %(pos, posi, array_df[lin][col], t.get_text()))
 
-        #set text
-        txt_res = configcell_text_and_colors(array_df, lin, col, t, facecolors, posi, fz, fmt, show_null_values)
+        # set text
+        txt_res = configcell_text_and_colors(array_df, lin, col, t, facecolors, posi, fz, show_null_values)
 
         text_add.extend(txt_res[0])
         text_del.extend(txt_res[1])
 
-    #remove the old ones
+    # remove the old ones
     for item in text_del:
         item.remove()
-    #append the new ones
+    # append the new ones
     for item in text_add:
         ax.text(item['x'], item['y'], item['text'], **item['kw'])
 
-    #titles and legends
+    # titles and legends
     ax.set_title('Confusion matrix')
     ax.set_xlabel(xlbl)
     ax.set_ylabel(ylbl)
@@ -234,17 +233,16 @@ def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fmt='.2f', f
     if outputfile is None:
         plt.show()
     else:
-        plt.savefig(outputfile, dpi=300)
+        plt.savefig(outputfile, dpi=600)
 
 
 def plot_confusion_matrix_from_data(y_true, y_pred, columns=None, annot=True, cmap="Oranges",
-      fmt='.2f', fz=11, lw=0.5, cbar=False, figsize=[8, 8], show_null_values=0, pred_val_axis='lin', outputfile=None):
+      fz=11, lw=0.5, cbar=False, figsize=[7, 7], show_null_values=0, pred_val_axis='lin', outputfile=None):
     """
         plot confusion matrix function with y_true (actual values) and y_pred (predictions),
         whitout a confusion matrix yet
     """
     from sklearn.metrics import confusion_matrix
-    from pandas import DataFrame
 
     #data
     if columns is None:
@@ -255,7 +253,8 @@ def plot_confusion_matrix_from_data(y_true, y_pred, columns=None, annot=True, cm
         columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_true))]]
 
     confm = confusion_matrix(y_true, y_pred)
-    show_null_values = 2
     df_cm = DataFrame(confm, index=columns, columns=columns)
-    pretty_plot_confusion_matrix(df_cm, fz=fz, cmap=cmap, figsize=figsize, show_null_values=show_null_values,
-                                 pred_val_axis=pred_val_axis, outputfile=outputfile)
+    pretty_plot_confusion_matrix(
+        df_cm, annot=annot, cmap=cmap, fz=fz, cbar=cbar, figsize=figsize, 
+        show_null_values=show_null_values, pred_val_axis=pred_val_axis, outputfile=outputfile
+    )
