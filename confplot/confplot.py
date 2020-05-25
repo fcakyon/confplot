@@ -255,8 +255,6 @@ def plot_confusion_matrix_from_data(y_true, y_pred, columns=None, annot=True, cm
         columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_true))]]
 
     confm = confusion_matrix(y_true, y_pred)
-    # cmap = 'Oranges'
-    figsize = [9, 9]
     show_null_values = 2
     df_cm = DataFrame(confm, index=columns, columns=columns)
     pretty_plot_confusion_matrix(df_cm, fz=fz, cmap=cmap, figsize=figsize, show_null_values=show_null_values,
