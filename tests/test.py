@@ -9,17 +9,17 @@ from confplot import (
 
 class TestPrettyConfMat(unittest.TestCase):
     def test_data_class(self):
-        """ test function with y_test (actual values) and predictions (predic) """
+        """ test function y_true (actual values) and y_pred (predictions) """
         #data
-        y_test = np.array([1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5])
-        predic = np.array([1,2,4,3,5, 1,2,4,3,5, 1,2,3,4,4, 1,4,3,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,3,3,5, 1,2,3,3,5, 1,2,3,4,4, 1,2,3,4,1, 1,2,3,4,1, 1,2,3,4,1, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5])
+        y_true = np.array([1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5])
+        y_pred = np.array([1,2,4,3,5, 1,2,4,3,5, 1,2,3,4,4, 1,4,3,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,3,3,5, 1,2,3,3,5, 1,2,3,4,4, 1,2,3,4,1, 1,2,3,4,1, 1,2,3,4,1, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,4,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5])
         """
         Examples to validate output (confusion matrix plot)
             actual: 5 and prediction 1   >>  3
             actual: 2 and prediction 4   >>  1
             actual: 3 and prediction 4   >>  10
         """
-        columns = []
+        columns = None
         annot = True
         cmap = 'Oranges'
         fmt = '.2f'
@@ -29,9 +29,9 @@ class TestPrettyConfMat(unittest.TestCase):
         pred_val_axis = 'y'
         fz = 12
         figsize = [9, 9]
-        if(len(y_test) > 10):
-            fz = 9; figsize=[14, 14]
-        plot_confusion_matrix_from_data(y_test, predic, columns,
+        if(len(y_true) > 10):
+            fz = 9; figsize = [14, 14]
+        plot_confusion_matrix_from_data(y_true, y_pred, columns,
         annot, cmap, fmt, fz, lw, cbar, figsize, show_null_values, pred_val_axis)
 
     def test_cm(self):

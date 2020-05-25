@@ -237,10 +237,10 @@ def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fmt='.2f', f
         plt.savefig(outputfile, dpi=300)
 
 
-def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=True, cmap="Oranges",
-      fmt='.2f', fz=11, lw=0.5, cbar=False, figsize=[8,8], show_null_values=0, pred_val_axis='lin', outputfile=None):
+def plot_confusion_matrix_from_data(y_true, y_pred, columns=None, annot=True, cmap="Oranges",
+      fmt='.2f', fz=11, lw=0.5, cbar=False, figsize=[8, 8], show_null_values=0, pred_val_axis='lin', outputfile=None):
     """
-        plot confusion matrix function with y_test (actual values) and predictions (predic),
+        plot confusion matrix function with y_true (actual values) and y_pred (predictions),
         whitout a confusion matrix yet
     """
     from sklearn.metrics import confusion_matrix
@@ -249,14 +249,14 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
     #data
     if columns is None:
         #labels axis integer:
-        ##columns = range(1, len(np.unique(y_test))+1)
+        ##columns = range(1, len(np.unique(y_true))+1)
         #labels axis string:
         from string import ascii_uppercase
-        columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_test))]]
+        columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_true))]]
 
-    confm = confusion_matrix(y_test, predictions, labels=columns)
+    confm = confusion_matrix(y_true, y_pred)
     # cmap = 'Oranges'
-    figsize=[9, 9]
+    figsize = [9, 9]
     show_null_values = 2
     df_cm = DataFrame(confm, index=columns, columns=columns)
     pretty_plot_confusion_matrix(df_cm, fz=fz, cmap=cmap, figsize=figsize, show_null_values=show_null_values,
