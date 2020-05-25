@@ -9,7 +9,7 @@ This module lets you plot a pretty looking confusion matrix from a np matrix or 
 
 Sample plots:
 
-<img src="screenshots/conf_matrix_plot1.png" width="512"> <img src="screenshots/conf_matrix_plot2.png" width="512">
+<img src="screenshots/conf_matrix_plot1.png" width="450"> <img src="screenshots/conf_matrix_plot2.png" width="450">
 
 ## Getting started
 
