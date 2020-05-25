@@ -1,4 +1,6 @@
 import unittest
+import numpy as np
+from pandas import DataFrame
 from confplot import (
     plot_confusion_matrix_from_data,
     plot_confusion_matrix_from_matrix
