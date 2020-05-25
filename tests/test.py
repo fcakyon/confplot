@@ -1,4 +1,8 @@
 import unittest
+from confplot import (
+    plot_confusion_matrix_from_data,
+    plot_confusion_matrix_from_matrix
+)
 
 
 class TestPrettyConfMat(unittest.TestCase):
@@ -40,7 +44,7 @@ class TestPrettyConfMat(unittest.TestCase):
         df_cm = DataFrame(array, index=range(1, 7), columns=range(1, 7))
         #colormap: see this and choose your more dear
         cmap = 'PuRd'
-        pretty_plot_confusion_matrix(df_cm, cmap=cmap)
+        plot_confusion_matrix_from_matrix(df_cm, cmap=cmap)
 
 
 if __name__ == '__main__':
