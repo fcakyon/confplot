@@ -18,7 +18,7 @@ pip install confplot
 
 ### Usage
 
-## Plot confusion matrix from matrix
+#### Plot confusion matrix from matrix
 
 ```python
 # import package
@@ -41,7 +41,7 @@ df_cm = DataFrame(array, index=range(1, 7), columns=range(1, 7))
 confplot.plot_confusion_matrix_from_matrix(df_cm, outfule="cm_plot.png")
 ```
 
-## Plot confusion matrix from data
+#### Plot confusion matrix from data
 ```python
 # import package
 import confplot
