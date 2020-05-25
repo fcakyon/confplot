@@ -1,4 +1,7 @@
-# Plot Confusion Matrix in Python
+# ConfPlot: Plot Confusion Matrix in Python
+
+[![PyPI version](https://badge.fury.io/py/confplot.svg)](https://badge.fury.io/py/confplot)
+![CI](https://github.com/fcakyon/confplot/workflows/CI/badge.svg)
 
 Plot a pretty confusion matrix (like Matlab) in python using seaborn and matplotlib
 
