@@ -41,7 +41,7 @@ array = np.array(
 df_cm = DataFrame(array, index=range(1, 7), columns=range(1, 7))
 
 # create and save confusion matrix plot as "cm_plot.png"
-confplot.plot_confusion_matrix_from_matrix(df_cm, outfule="cm_plot.png")
+confplot.plot_confusion_matrix_from_matrix(df_cm, outfile="cm_plot.png")
 ```
 
 #### Plot confusion matrix from data
@@ -61,6 +61,6 @@ confplot.plot_confusion_matrix_from_data(
     y_true,
     y_pred,
     columns,
-    outfule="cm_plot.png"
+    outfile="cm_plot.png"
 )
 ```
