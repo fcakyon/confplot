@@ -9,12 +9,17 @@ Example plot:
 ![alt text](screenshots/conf_matrix_plot.png)
 
 ## Getting started
+
 ### Installation
+
 ```console
 pip install confplot
 ```
 
 ### Usage
+
+## Plot confusion matrix from matrix
+
 ```python
 # import package
 import confplot
@@ -36,3 +41,23 @@ df_cm = DataFrame(array, index=range(1, 7), columns=range(1, 7))
 confplot.plot_confusion_matrix_from_matrix(df_cm, outfule="cm_plot.png")
 ```
 
+## Plot confusion matrix from data
+```python
+# import package
+import confplot
+
+# assume you have 1D y_true (actual values) and y_pred (predictions) arrays
+y_true = ...
+y_pred = ...
+
+# arange targetclass names if you want
+columns = ["ahududu", "ananas", "armut", "avokado", "ayva"]
+
+# create and save confusion matrix plot as "cm_plot.png"
+confplot.plot_confusion_matrix_from_data(
+    y_true,
+    y_pred,
+    columns,
+    outfule="cm_plot.png"
+)
+```
