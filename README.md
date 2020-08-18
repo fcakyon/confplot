@@ -1,5 +1,6 @@
 # ConfPlot: Plot Confusion Matrix in Python
 
+[![Downloads](https://pepy.tech/badge/confplot)](https://pepy.tech/project/confplot)
 [![PyPI version](https://badge.fury.io/py/confplot.svg)](https://badge.fury.io/py/confplot)
 ![CI](https://github.com/fcakyon/confplot/workflows/CI/badge.svg)
 
